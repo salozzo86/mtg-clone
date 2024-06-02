@@ -1,12 +1,6 @@
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.SimpleTheme;
-import com.googlecode.lanterna.gui2.BasicWindow;
-import com.googlecode.lanterna.gui2.Button;
-import com.googlecode.lanterna.gui2.GridLayout;
-import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
-import com.googlecode.lanterna.gui2.Panel;
-import com.googlecode.lanterna.gui2.Window;
-import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
+import com.googlecode.lanterna.gui2.*;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -16,11 +10,20 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class GameManager {
+    private final Terminal terminal;
+    private final Screen screen;
+    private final WindowBasedTextGUI gui;
+    private final Window window;
 
-    public void runMainMenu() throws IOException {
-        Terminal terminal = new DefaultTerminalFactory().createTerminal();
-        Screen screen = new TerminalScreen(terminal);
-        WindowBasedTextGUI gui = new MultiWindowTextGUI(screen);
+    public GameManager() throws IOException {
+        terminal = new DefaultTerminalFactory().createTerminal();
+        screen = new TerminalScreen(terminal);
+        gui = new MultiWindowTextGUI(screen);
+        window = new BasicWindow();
+        initializeGui();
+    }
+
+    private void initializeGui() throws IOException {
         gui.setTheme(SimpleTheme.makeTheme(true,
                 TextColor.ANSI.BLACK,
                 TextColor.ANSI.BLUE_BRIGHT,
@@ -31,12 +34,13 @@ public class GameManager {
                 TextColor.ANSI.BLUE_BRIGHT
         ));
         screen.startScreen();
-        final Window window = new BasicWindow();
+    }
+
+    public void runMainMenu() {
         window.setHints(Collections.singletonList(Window.Hint.CENTERED));
-        GridLayout gridLayout = new GridLayout(1);
-        Panel contentPanel = new Panel(new GridLayout(2));
-        gridLayout.setHorizontalSpacing(3);
-        Button startButton = new Button("Start", () -> System.out.println("Starting the game..."));
+        Panel contentPanel = new Panel(new GridLayout(1));
+
+        Button startButton = new Button("Start", this::runDeckDecision);
         Button exitButton = new Button("Exit", window::close);
 
         contentPanel.addComponent(startButton);
@@ -44,11 +48,31 @@ public class GameManager {
 
         window.setComponent(contentPanel);
         gui.addWindowAndWait(window);
-
-        screen.stopScreen();
     }
 
-    public void run() throws IOException {
-        runMainMenu();
+    private void runDeckDecision() {
+        Panel contentPanel = new Panel(new GridLayout(1));
+
+        Button firstDeck = new Button("Aggro deck", () -> System.out.println("You have chosen an aggro deck"));
+        Button secondDeck = new Button("Control deck", () -> System.out.println("You have chosen a control deck"));
+
+        contentPanel.addComponent(firstDeck);
+        contentPanel.addComponent(secondDeck);
+
+        window.setComponent(contentPanel);
+        gui.addWindowAndWait(window);
+    }
+
+    public void run() {
+        try {
+            runMainMenu();
+        } finally {
+            try {
+                screen.stopScreen();
+                terminal.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
