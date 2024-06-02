@@ -1,14 +1,5 @@
 package views;
 
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import controllers.CardController;
-import models.LandModel;
-import utils.CardRenderer;
-
-import java.io.IOException;
-
 public class CardView {
 //    public void displayCard() {
 //        // terminal setup
