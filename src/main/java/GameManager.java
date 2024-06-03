@@ -5,6 +5,8 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -40,9 +42,12 @@ public class GameManager {
         window.setHints(Collections.singletonList(Window.Hint.CENTERED));
         Panel contentPanel = new Panel(new GridLayout(1));
 
-        Button startButton = new Button("Start", this::runDeckDecision);
-        Button exitButton = new Button("Exit", window::close);
+        Label mainMenuLabel = new Label("What do you want to do?");
+        Button startButton = new Button("Play a game", this::runDeckDecision);
+        Button exitButton = new Button("Quit", window::close);
 
+        contentPanel.addComponent(mainMenuLabel);
+        contentPanel.addComponent(new EmptySpace());
         contentPanel.addComponent(startButton);
         contentPanel.addComponent(exitButton);
 
@@ -52,27 +57,16 @@ public class GameManager {
 
     private void runDeckDecision() {
         Panel contentPanel = new Panel(new GridLayout(1));
-
+        Label chooseDeckLabel = new Label("Choose your deck!");
         Button firstDeck = new Button("Aggro deck", () -> System.out.println("You have chosen an aggro deck"));
         Button secondDeck = new Button("Control deck", () -> System.out.println("You have chosen a control deck"));
 
+        contentPanel.addComponent(chooseDeckLabel);
+        contentPanel.addComponent(new EmptySpace());
         contentPanel.addComponent(firstDeck);
         contentPanel.addComponent(secondDeck);
 
         window.setComponent(contentPanel);
         gui.addWindowAndWait(window);
-    }
-
-    public void run() {
-        try {
-            runMainMenu();
-        } finally {
-            try {
-                screen.stopScreen();
-                terminal.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
