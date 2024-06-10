@@ -44,7 +44,7 @@ public class GameManager {
 
         Label mainMenuLabel = new Label("What do you want to do?");
         Button startButton = new Button("Play a game", this::runDeckDecision);
-        Button exitButton = new Button("Quit", window::close);
+        Button exitButton = new Button("Quit", this::quit);
 
         contentPanel.addComponent(mainMenuLabel);
         contentPanel.addComponent(new EmptySpace());
@@ -53,6 +53,15 @@ public class GameManager {
 
         window.setComponent(contentPanel);
         gui.addWindowAndWait(window);
+    }
+
+    private void quit() {
+        try {
+            screen.stopScreen();
+            terminal.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void runDeckDecision() {
