@@ -1,12 +1,23 @@
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.SimpleTheme;
-import com.googlecode.lanterna.gui2.*;
+
+import com.googlecode.lanterna.gui2.BasicWindow;
+import com.googlecode.lanterna.gui2.Button;
+import com.googlecode.lanterna.gui2.EmptySpace;
+import com.googlecode.lanterna.gui2.GridLayout;
+import com.googlecode.lanterna.gui2.Label;
+import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
+import com.googlecode.lanterna.gui2.Panel;
+import com.googlecode.lanterna.gui2.Window;
+import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import models.FieldModel;
+import models.LifePointsModel;
+import views.FieldView;
+
 
 import java.io.IOException;
 import java.util.Collections;
@@ -67,8 +78,8 @@ public class GameManager {
     private void runDeckDecision() {
         Panel contentPanel = new Panel(new GridLayout(1));
         Label chooseDeckLabel = new Label("Choose your deck!");
-        Button firstDeck = new Button("Aggro deck", () -> System.out.println("You have chosen an aggro deck"));
-        Button secondDeck = new Button("Control deck", () -> System.out.println("You have chosen a control deck"));
+        Button firstDeck = new Button("Aggro deck", this::startMatch);
+        Button secondDeck = new Button("Control deck", this::startMatch);
 
         contentPanel.addComponent(chooseDeckLabel);
         contentPanel.addComponent(new EmptySpace());
@@ -77,5 +88,14 @@ public class GameManager {
 
         window.setComponent(contentPanel);
         gui.addWindowAndWait(window);
+    }
+
+    private void startMatch() {
+        window.close();
+
+        FieldView fieldView = new FieldView();
+
+        Window fieldWindow = fieldView.getWindow();
+        gui.addWindowAndWait(fieldWindow);
     }
 }
