@@ -22,7 +22,7 @@ public class FieldModel {
     [x] playerExilePile
     [x] opponentExilePile
 
-    [] actionMenu
+    actionMenu should go somewhere else
      */
 
     private LifePointsModel playerLifePoints;

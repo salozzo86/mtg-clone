@@ -1,18 +1,14 @@
 package models;
 
-import java.util.ArrayList;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
+@AllArgsConstructor
 public class ExilePileModel {
     private final List<CardModel> cards;
-
-    public ExilePileModel() {
-        this.cards = new ArrayList<>();
-    }
-
-    public List<CardModel> getCards() {
-        return new ArrayList<>(cards);
-    }
 
     public void addCard(CardModel card) {
         cards.add(card);

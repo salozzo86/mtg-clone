@@ -15,8 +15,8 @@ import models.LifePointsModel;
 @Getter
 public class FieldView {
     private final Window window;
-    private final Label playerLifePointsLabel;
-    private final Label opponentLifePointsLabel;
+    private final LifePointsView playerLifePointsView;
+    private final LifePointsView opponentLifePointsView;
     private final Label playerDeckLabel;
     private final Label opponentDeckLabel;
 
@@ -24,25 +24,26 @@ public class FieldView {
         window = new BasicWindow();
 
         Panel contentPanel = new Panel(new GridLayout(1));
+        DeckController deckController = new DeckController();
 
         LifePointsModel playerLifePoints = new LifePointsModel();
         LifePointsModel opponentLifePoints = new LifePointsModel();
-        DeckController deckController = new DeckController();
         DeckModel playerDeck = new DeckModel(deckController.generateDeck(60).getCards());
         DeckModel opponentDeck = new DeckModel(deckController.generateDeck(60).getCards());
-
         FieldModel fieldModel = new FieldModel(playerLifePoints, opponentLifePoints, playerDeck, opponentDeck);
+        playerLifePointsView = new LifePointsView(fieldModel);
+        opponentLifePointsView = new LifePointsView(fieldModel);
 
-        playerLifePointsLabel = new Label("Player Life Points: " + fieldModel.getPlayerLifePoints().getLifePoints());
-        opponentLifePointsLabel = new Label("Opponent Life Points: " + fieldModel.getOpponentLifePoints().getLifePoints());
+
+
         playerDeckLabel = new Label("Player Deck Cards: " + playerDeck.getCards().size());
         opponentDeckLabel = new Label("Opponent Deck Cards: " + playerDeck.getCards().size());
 
 
 
-        contentPanel.addComponent(playerLifePointsLabel);
+        contentPanel.addComponent(playerLifePointsView.getPanel());
         contentPanel.addComponent(new EmptySpace());
-        contentPanel.addComponent(opponentLifePointsLabel);
+        contentPanel.addComponent(opponentLifePointsView.getPanel());
         contentPanel.addComponent(new EmptySpace());
         contentPanel.addComponent(playerDeckLabel);
         contentPanel.addComponent(new EmptySpace());

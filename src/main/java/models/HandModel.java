@@ -21,4 +21,6 @@ public class HandModel {
      public void removeCard(CardModel card) {
          cards.remove(card);
      }
+
+     // sort hand?
 }
