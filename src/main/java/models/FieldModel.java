@@ -27,8 +27,8 @@ public class FieldModel {
 
     private LifePointsModel playerLifePoints;
     private LifePointsModel opponentLifePoints;
-    private DeckModel playerDeck;
-    private DeckModel opponentDeck;
+    private GrimoireModel playerDeck;
+    private GrimoireModel opponentDeck;
 //    private GraveyardModel playerGraveyard;
 //    private GraveyardModel opponentGraveyard;
 //    private ExilePileModel playerExilePile;
