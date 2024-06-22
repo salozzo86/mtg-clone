@@ -6,13 +6,14 @@ import com.googlecode.lanterna.gui2.Label;
 import com.googlecode.lanterna.gui2.Panel;
 import lombok.Getter;
 import models.FieldModel;
+import models.LifePointsModel;
 
 @Getter
 public class LifePointsView {
     private final Panel panel;
 
-    public LifePointsView(FieldModel fieldModel) {
-        Label lifePointsLabel = new Label(String.valueOf(fieldModel.getPlayerLifePoints().getLifePoints()));
+    public LifePointsView(LifePointsModel lifePointsModel) {
+        Label lifePointsLabel = new Label("Life Points: " + lifePointsModel.getLifePoints());
         panel = new Panel(new GridLayout(1));
         panel.addComponent(lifePointsLabel);
     }

@@ -29,10 +29,10 @@ public class FieldModel {
     private LifePointsModel opponentLifePoints;
     private DeckModel playerDeck;
     private DeckModel opponentDeck;
-//    private GraveyardModel playerGraveyard;
-//    private GraveyardModel opponentGraveyard;
-//    private ExilePileModel playerExilePile;
-//    private ExilePileModel opponentExilePile;
+    private GraveyardModel playerGraveyard;
+    private GraveyardModel opponentGraveyard;
+    private ExilePileModel playerExilePile;
+    private ExilePileModel opponentExilePile;
 //    private HandModel playerHand;
 //    private HandModel opponentHand;
 
