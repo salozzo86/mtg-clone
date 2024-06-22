@@ -2,14 +2,15 @@ package views;
 
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Direction;
+import com.googlecode.lanterna.gui2.EmptySpace;
 import com.googlecode.lanterna.gui2.GridLayout;
 import com.googlecode.lanterna.gui2.Label;
 import com.googlecode.lanterna.gui2.LinearLayout;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.Window;
-import controllers.GrimoireController;
+import controllers.DeckController;
 import lombok.Getter;
-import models.GrimoireModel;
+import models.DeckModel;
 import models.FieldModel;
 import models.LifePointsModel;
 
@@ -23,17 +24,18 @@ public class FieldView {
         window = new BasicWindow();
 
         Panel mainPanel = new Panel(new LinearLayout(Direction.VERTICAL));
-        GrimoireController grimoireController = new GrimoireController();
+        DeckController deckController = new DeckController();
 
         // Initialize models
         LifePointsModel opponentLifePoints = new LifePointsModel();
         LifePointsModel playerLifePoints = new LifePointsModel();
-        GrimoireModel opponentDeck = new GrimoireModel(grimoireController.generateDeck(60).getCards());
-        GrimoireModel playerDeck = new GrimoireModel(grimoireController.generateDeck(60).getCards());
+        DeckModel opponentDeck = new DeckModel(deckController.generateDeck(60).getCards());
+        DeckModel playerDeck = new DeckModel(deckController.generateDeck(60).getCards());
         FieldModel fieldModel = new FieldModel(playerLifePoints, opponentLifePoints, playerDeck, opponentDeck);
 
 
         // Initialize views and add them to panels
+
 
         // opponent panel
         Panel opponentPanel = new Panel(new LinearLayout(Direction.HORIZONTAL));

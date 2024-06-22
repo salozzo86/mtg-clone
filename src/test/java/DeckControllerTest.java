@@ -1,14 +1,14 @@
-import controllers.GrimoireController;
-import models.GrimoireModel;
+import controllers.DeckController;
+import models.DeckModel;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GrimoireControllerTest {
+public class DeckControllerTest {
 
     @Test
     public void deckControllerGenerationTest() {
-        GrimoireController grimoireController = new GrimoireController();
-        GrimoireModel deck = grimoireController.generateDeck(60);
+        DeckController deckController = new DeckController();
+        DeckModel deck = deckController.generateDeck(60);
 
         assertThat(deck.getCards().size()).isEqualTo(60);
 
@@ -16,8 +16,8 @@ public class GrimoireControllerTest {
 
     @Test
     public void deckControllerShuffleTest() {
-        GrimoireController grimoireController = new GrimoireController();
-        GrimoireModel deck = grimoireController.generateDeck(60);
+        DeckController deckController = new DeckController();
+        DeckModel deck = deckController.generateDeck(60);
 
         String[] preShuffleDeckCards = new String[60];
         String[] postShuffleDeckCards = new String[60];
@@ -26,7 +26,7 @@ public class GrimoireControllerTest {
             preShuffleDeckCards[i] = deck.getCards().get(i).getName();
         }
 
-        grimoireController.shuffleDeck(deck);
+        deckController.shuffleDeck(deck);
 
         for (int i = 0; i < deck.getCards().size(); i++) {
             postShuffleDeckCards[i] = deck.getCards().get(i).getName();

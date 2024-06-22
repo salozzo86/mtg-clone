@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class GrimoireModel {
+public class DeckModel {
     List<CardModel> cards;
 }
