@@ -33,8 +33,8 @@ public class FieldModel {
     private GraveyardModel opponentGraveyard;
     private ExilePileModel playerExilePile;
     private ExilePileModel opponentExilePile;
-//    private HandModel playerHand;
-//    private HandModel opponentHand;
+    private HandModel playerHand;
+    private HandModel opponentHand;
 
 
 }

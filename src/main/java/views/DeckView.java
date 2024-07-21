@@ -9,10 +9,15 @@ import models.DeckModel;
 @Getter
 public class DeckView {
     private final Panel panel;
+    private final Label deckLabel;
 
     public DeckView(DeckModel deckModel) {
-        Label deckLabel = new Label("Deck: " + deckModel.getCards().size());
+        deckLabel = new Label("Deck: " + deckModel.getCards().size());
         panel = new Panel(new GridLayout(1));
         panel.addComponent(deckLabel);
+    }
+
+    public void updateDeckLabel(int size) {
+        deckLabel.setText("Deck: " + size);
     }
 }

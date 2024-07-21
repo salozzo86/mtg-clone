@@ -90,7 +90,7 @@ public class GameManager {
         gui.addWindowAndWait(window);
     }
 
-    // Add argument for deck choice - either enum or a Deck object
+    // TODO Add argument for deck choice - either enum or a Deck object
     private void startMatch() {
         window.close();
 

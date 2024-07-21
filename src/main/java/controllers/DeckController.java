@@ -27,4 +27,5 @@ public class DeckController {
     public void shuffleDeck(DeckModel deck) {
         Collections.shuffle(deck.getCards());
     }
+
 }

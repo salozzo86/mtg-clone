@@ -26,10 +26,10 @@ public class CardView {
         Label manaCostLabel = new Label(String.valueOf(cardModel.getManaCost()));
         manaCostPanel = new Panel(new GridLayout(1));
 
-        Label typeLabel = new Label(cardModel.getType().toString());
+        Label typeLabel = new Label(cardModel.getType().getType().toString());
         typePanel = new Panel(new GridLayout(1));
 
-        Label subtypeLabel = new Label(cardModel.getSubType().toString());
+        Label subtypeLabel = new Label(cardModel.getSubType().getName());
         subtypePanel = new Panel(new GridLayout(1));
 
         Label rarityLabel = new Label(cardModel.getRarity().toString());

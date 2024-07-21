@@ -5,7 +5,6 @@ import com.googlecode.lanterna.gui2.GridLayout;
 import com.googlecode.lanterna.gui2.Label;
 import com.googlecode.lanterna.gui2.Panel;
 import lombok.Getter;
-import models.FieldModel;
 import models.LifePointsModel;
 
 @Getter

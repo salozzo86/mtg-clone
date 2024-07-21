@@ -10,15 +10,21 @@ import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.Window;
 import controllers.DeckController;
 import lombok.Getter;
+import models.CardModel;
 import models.DeckModel;
 import models.ExilePileModel;
 import models.FieldModel;
 import models.GraveyardModel;
+import models.HandModel;
 import models.LifePointsModel;
+
+import java.util.List;
 
 @Getter
 public class FieldView {
     private final Window window;
+
+    // TODO Consolidate the below duplication in a PlayerView class
     private final LifePointsView playerLifePointsView;
     private final LifePointsView opponentLifePointsView;
     private final DeckView playerDeckView;
@@ -27,17 +33,19 @@ public class FieldView {
     private final GraveyardView opponentGraveyardView;
     private final ExilePileView playerExilePileView;
     private final ExilePileView opponentExilePileView;
+    private final HandView playerHandView;
+    private final HandView opponentHandView;
 
 
     public FieldView() {
         window = new BasicWindow();
 
         Panel mainPanel = new Panel(new LinearLayout(Direction.VERTICAL));
+
         FieldModel fieldModel = getFieldModel();
 
 
         // Initialize views and add them to panels
-
 
         // opponent panel
         Panel opponentPanel = new Panel(new LinearLayout(Direction.HORIZONTAL));
@@ -52,6 +60,18 @@ public class FieldView {
         opponentPanel.addComponent(new Label("Opponent"));
         opponentPanel.addComponent(opponentLifePointsView.getPanel());
         opponentPanel.addComponent(opponentHandPanel);
+        opponentHandView = new HandView();
+        List<CardModel> opponentHandCards = fieldModel.getOpponentDeck().drawCards(7);
+
+        for (CardModel card : opponentHandCards) {
+            CardView cardView = new CardView(card);
+            opponentHandView.addCard(cardView);
+        }
+
+        // update the deck label
+        opponentDeckView.updateDeckLabel(fieldModel.getOpponentDeck().getCards().size());
+
+        opponentHandPanel.addComponent(opponentHandView.getMainPanel());
         opponentDecksPanel.addComponent(opponentDeckView.getPanel());
         opponentDecksPanel.addComponent(opponentGraveyardView.getPanel());
         opponentDecksPanel.addComponent(opponentExilePileView.getPanel());
@@ -72,15 +92,28 @@ public class FieldView {
         playerGraveyardView = new GraveyardView(fieldModel.getPlayerGraveyard());
         playerExilePileView = new ExilePileView(fieldModel.getPlayerExilePile());
 
+
         playerPanel.addComponent(new Label("Player"));
         playerPanel.addComponent(playerLifePointsView.getPanel());
         playerPanel.addComponent(playerHandPanel);
+        playerHandView = new HandView();
+        List<CardModel> playerHandCards = fieldModel.getPlayerDeck().drawCards(7);
+
+        for (CardModel card : playerHandCards) {
+            CardView cardView = new CardView(card);
+            playerHandView.addCard(cardView);
+        }
+
+        // update the deck label
+        playerDeckView.updateDeckLabel(fieldModel.getPlayerDeck().getCards().size());
+
+        playerHandPanel.addComponent(playerHandView.getMainPanel());
         playerDecksPanel.addComponent(playerDeckView.getPanel());
         playerDecksPanel.addComponent(playerGraveyardView.getPanel());
         playerDecksPanel.addComponent(playerExilePileView.getPanel());
         playerPanel.addComponent(playerDecksPanel);
 
-
+        // add everything to the main panel
         mainPanel.addComponent(opponentPanel);
         mainPanel.addComponent(fieldPanel);
         mainPanel.addComponent(playerPanel);
@@ -88,6 +121,7 @@ public class FieldView {
     }
 
     private static FieldModel getFieldModel() {
+        // Initialize controllers
         DeckController deckController = new DeckController();
 
         // Initialize models
@@ -103,8 +137,11 @@ public class FieldView {
         ExilePileModel playerExilePile = new ExilePileModel();
         ExilePileModel opponentExilePile = new ExilePileModel();
 
+        HandModel playerHand = new HandModel();
+        HandModel opponentHand = new HandModel();
 
-        return new FieldModel(playerLifePoints, opponentLifePoints, playerDeck, opponentDeck, playerGraveyard, opponentGraveyard, playerExilePile, opponentExilePile);
+
+        return new FieldModel(playerLifePoints, opponentLifePoints, playerDeck, opponentDeck, playerGraveyard, opponentGraveyard, playerExilePile, opponentExilePile, playerHand, opponentHand);
     }
 
 }
