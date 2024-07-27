@@ -14,14 +14,14 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import models.FieldModel;
-import models.LifePointsModel;
+import lombok.Getter;
 import views.FieldView;
 
 
 import java.io.IOException;
 import java.util.Collections;
 
+@Getter
 public class GameManager {
     private final Terminal terminal;
     private final Screen screen;

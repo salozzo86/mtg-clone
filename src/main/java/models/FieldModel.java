@@ -35,6 +35,4 @@ public class FieldModel {
     private ExilePileModel opponentExilePile;
     private HandModel playerHand;
     private HandModel opponentHand;
-
-
 }

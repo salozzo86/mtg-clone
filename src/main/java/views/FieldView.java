@@ -2,7 +2,6 @@ package views;
 
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Direction;
-import com.googlecode.lanterna.gui2.EmptySpace;
 import com.googlecode.lanterna.gui2.GridLayout;
 import com.googlecode.lanterna.gui2.Label;
 import com.googlecode.lanterna.gui2.LinearLayout;
@@ -35,6 +34,7 @@ public class FieldView {
     private final ExilePileView opponentExilePileView;
     private final HandView playerHandView;
     private final HandView opponentHandView;
+    private final ActionMenuView actionMenuView;
 
 
     public FieldView() {
@@ -68,9 +68,6 @@ public class FieldView {
             opponentHandView.addCard(cardView);
         }
 
-        // update the deck label
-        opponentDeckView.updateDeckLabel(fieldModel.getOpponentDeck().getCards().size());
-
         opponentHandPanel.addComponent(opponentHandView.getMainPanel());
         opponentDecksPanel.addComponent(opponentDeckView.getPanel());
         opponentDecksPanel.addComponent(opponentGraveyardView.getPanel());
@@ -80,7 +77,9 @@ public class FieldView {
 
         // field panel
         Panel fieldPanel = new Panel(new LinearLayout(Direction.HORIZONTAL));
+        actionMenuView = new ActionMenuView();
         fieldPanel.addComponent(new Label("Field"));
+        fieldPanel.addComponent(actionMenuView.getContentPanel());
 
         // player panel
         Panel playerPanel = new Panel(new LinearLayout(Direction.HORIZONTAL));
@@ -105,7 +104,7 @@ public class FieldView {
         }
 
         // update the deck label
-        playerDeckView.updateDeckLabel(fieldModel.getPlayerDeck().getCards().size());
+        //playerDeckView.updateDeckLabel(fieldModel.getPlayerDeck().getCards().size());
 
         playerHandPanel.addComponent(playerHandView.getMainPanel());
         playerDecksPanel.addComponent(playerDeckView.getPanel());
@@ -141,7 +140,18 @@ public class FieldView {
         HandModel opponentHand = new HandModel();
 
 
-        return new FieldModel(playerLifePoints, opponentLifePoints, playerDeck, opponentDeck, playerGraveyard, opponentGraveyard, playerExilePile, opponentExilePile, playerHand, opponentHand);
+
+        return new FieldModel(
+                playerLifePoints,
+                opponentLifePoints,
+                playerDeck,
+                opponentDeck,
+                playerGraveyard,
+                opponentGraveyard,
+                playerExilePile,
+                opponentExilePile,
+                playerHand,
+                opponentHand);
     }
 
 }
