@@ -9,11 +9,18 @@ import models.ExilePileModel;
 
 @Getter
 public class ExilePileView {
-    private final Panel panel;
+    private final ExilePileModel exilePileModel;
 
     public ExilePileView(ExilePileModel exilePileModel) {
-        Label exilePileLabel = new Label("Exiled Cards: " + exilePileModel.getCards().size());
-        panel = new Panel(new GridLayout(1));
-        panel.addComponent(exilePileLabel);
+        this.exilePileModel = exilePileModel;
     }
+
+    public Panel getPanel() {
+        Label exilePileLabel = new Label("Exiled Cards: " + exilePileModel.getCards().size());
+        final Panel panel = new Panel(new GridLayout(1));
+        panel.addComponent(exilePileLabel);
+        System.out.println("EXILEEEE");
+        return panel;
+    }
+
 }
