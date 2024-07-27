@@ -14,6 +14,6 @@ public class HandView {
     }
 
     public void addCard(CardView cardView) {
-        mainPanel.addComponent(cardView.getMainPanel());
+        mainPanel.addComponent(cardView.getPanel());
     }
 }

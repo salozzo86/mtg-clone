@@ -10,30 +10,30 @@ import models.CardModel;
 
 @Getter
 public class CardView {
-    private final Panel mainPanel;
-    private final Panel namePanel;
-    private final Panel manaCostPanel;
-    private final Panel typePanel;
-    private final Panel subtypePanel;
-    private final Panel rarityPanel;
+    private final CardModel cardModel;
 
     public CardView(CardModel cardModel) {
-        mainPanel = new Panel(new LinearLayout(Direction.VERTICAL));
+        this.cardModel = cardModel;
+    }
+
+    // use this method to re-render instead of updating existing ones
+    public Panel getPanel() {
+        final Panel mainPanel = new Panel(new LinearLayout(Direction.VERTICAL));
 
         Label nameLabel = new Label(cardModel.getName());
-        namePanel = new Panel(new GridLayout(1));
+        //final Panel namePanel = new Panel(new GridLayout(1));
 
         Label manaCostLabel = new Label(String.valueOf(cardModel.getManaCost()));
-        manaCostPanel = new Panel(new GridLayout(1));
+        //final Panel manaCostPanel = new Panel(new GridLayout(1));
 
         Label typeLabel = new Label(cardModel.getType().getType().toString());
-        typePanel = new Panel(new GridLayout(1));
+        //final Panel typePanel = new Panel(new GridLayout(1));
 
         Label subtypeLabel = new Label(cardModel.getSubType().getName());
-        subtypePanel = new Panel(new GridLayout(1));
+        //final Panel subtypePanel = new Panel(new GridLayout(1));
 
         Label rarityLabel = new Label(cardModel.getRarity().toString());
-        rarityPanel = new Panel(new GridLayout(1));
+        //final Panel rarityPanel = new Panel(new GridLayout(1));
 
         mainPanel.addComponent(nameLabel);
         mainPanel.addComponent(manaCostLabel);
@@ -41,5 +41,6 @@ public class CardView {
         mainPanel.addComponent(subtypeLabel);
         mainPanel.addComponent(rarityLabel);
 
+        return mainPanel;
     }
 }
