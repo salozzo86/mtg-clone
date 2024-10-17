@@ -4,10 +4,8 @@ package views;
 import com.googlecode.lanterna.gui2.GridLayout;
 import com.googlecode.lanterna.gui2.Label;
 import com.googlecode.lanterna.gui2.Panel;
-import lombok.Getter;
 import models.ExilePileModel;
 
-@Getter
 public class ExilePileView {
     private final ExilePileModel exilePileModel;
 
