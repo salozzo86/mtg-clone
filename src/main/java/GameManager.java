@@ -1,3 +1,4 @@
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.SimpleTheme;
 
@@ -18,8 +19,12 @@ import lombok.Getter;
 import views.FieldView;
 
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 public class GameManager {
@@ -27,9 +32,19 @@ public class GameManager {
     private final Screen screen;
     private final WindowBasedTextGUI gui;
     private final Window window;
+    private static final int CELL_WIDTH_PX = 8;  // Approximate width of a terminal cell in pixels
+    private static final int CELL_HEIGHT_PX = 16; // Approximate height of a terminal cell in pixels
 
     public GameManager() throws IOException {
-        terminal = new DefaultTerminalFactory().createTerminal();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidthPx = screenSize.width;
+        int screenHeightPx = screenSize.height;
+        int terminalWidth = screenWidthPx / CELL_WIDTH_PX;
+        int terminalHeight = screenHeightPx / CELL_HEIGHT_PX;
+
+        terminal = new DefaultTerminalFactory()
+                .setInitialTerminalSize(new TerminalSize(terminalWidth, terminalHeight))
+                .createTerminal();
         screen = new TerminalScreen(terminal);
         gui = new MultiWindowTextGUI(screen);
         window = new BasicWindow();
@@ -50,7 +65,7 @@ public class GameManager {
     }
 
     public void runMainMenu() {
-        window.setHints(Collections.singletonList(Window.Hint.CENTERED));
+        window.setHints(List.of(Window.Hint.CENTERED));
         Panel contentPanel = new Panel(new GridLayout(1));
 
         Label mainMenuLabel = new Label("What do you want to do?");
