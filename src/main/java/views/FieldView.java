@@ -39,6 +39,7 @@ public class FieldView {
 
     public FieldView() {
         window = new BasicWindow();
+        window.setHints(List.of(Window.Hint.FULL_SCREEN));
 
         Panel mainPanel = new Panel(new LinearLayout(Direction.VERTICAL));
 

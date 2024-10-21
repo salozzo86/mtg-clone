@@ -17,7 +17,6 @@ public class ExilePileView {
         Label exilePileLabel = new Label("Exiled Cards: " + exilePileModel.getCards().size());
         final Panel panel = new Panel(new GridLayout(1));
         panel.addComponent(exilePileLabel);
-        System.out.println("EXILEEEE");
         return panel;
     }
 
