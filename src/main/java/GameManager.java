@@ -22,8 +22,6 @@ import views.FieldView;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -32,6 +30,7 @@ public class GameManager {
     private final Screen screen;
     private final WindowBasedTextGUI gui;
     private final Window window;
+    boolean gameOver;
     private static final int CELL_WIDTH_PX = 8;  // Approximate width of a terminal cell in pixels
     private static final int CELL_HEIGHT_PX = 16; // Approximate height of a terminal cell in pixels
 
@@ -86,7 +85,7 @@ public class GameManager {
             screen.stopScreen();
             terminal.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error stopping screen or closing terminal: " + e.getMessage());
         }
     }
 
@@ -108,9 +107,7 @@ public class GameManager {
     // TODO Add argument for deck choice - either enum or a Deck object
     private void startMatch() {
         window.close();
-
         FieldView fieldView = new FieldView();
-
         Window fieldWindow = fieldView.getWindow();
         gui.addWindowAndWait(fieldWindow);
     }

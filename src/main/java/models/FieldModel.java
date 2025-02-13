@@ -6,25 +6,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class FieldModel {
-    /*
-    [x] playerHand
-    [x] opponentHand
-
-    [x] playerLifePoints
-    [x] opponentLifePoints
-
-    [x] playerDeck
-    [x] opponentDeck
-
-    [x] playerGraveyard
-    [x] opponentGraveyard
-
-    [x] playerExilePile
-    [x] opponentExilePile
-
-    actionMenu should go somewhere else
-     */
-
     private LifePointsModel playerLifePoints;
     private LifePointsModel opponentLifePoints;
     private DeckModel playerDeck;

@@ -2,7 +2,6 @@ package models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ public class DeckModel {
         List<CardModel> drawnCards = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             if (!cards.isEmpty()) {
-                drawnCards.add(cards.remove(0));
+                drawnCards.add(cards.removeFirst());
             }
         }
         return drawnCards;
