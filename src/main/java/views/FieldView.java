@@ -41,49 +41,60 @@ public class FieldView {
         window = new BasicWindow();
         window.setHints(List.of(Window.Hint.FULL_SCREEN));
 
-        Panel mainPanel = new Panel(new LinearLayout(Direction.VERTICAL));
+        Panel mainPanel = new Panel(new GridLayout(1));
+        mainPanel.setLayoutData(GridLayout.createLayoutData(GridLayout.Alignment.FILL, GridLayout.Alignment.FILL, true, true));
 
         FieldModel fieldModel = getFieldModel();
 
 
         // Initialize views and add them to panels
 
-        // opponent panel
-        Panel opponentPanel = new Panel(new LinearLayout(Direction.HORIZONTAL));
-        Panel opponentHandPanel = new Panel(new GridLayout(1));
-        Panel opponentDecksPanel = new Panel(new LinearLayout(Direction.VERTICAL));
+        // Opponent panel with 3 columns
+        Panel opponentPanel = new Panel(new GridLayout(3));
+        opponentPanel.setLayoutData(GridLayout.createLayoutData(GridLayout.Alignment.FILL, GridLayout.Alignment.FILL, true, true));
 
+        // Left column: Opponent label + Life Points
+        Panel opponentInfoPanel = new Panel(new LinearLayout(Direction.VERTICAL));
+        opponentInfoPanel.addComponent(new Label("Opponent"));
         opponentLifePointsView = new LifePointsView(fieldModel.getOpponentLifePoints());
-        opponentDeckView = new DeckView(fieldModel.getOpponentDeck());
-        opponentGraveyardView = new GraveyardView(fieldModel.getOpponentGraveyard());
-        opponentExilePileView = new ExilePileView(fieldModel.getOpponentExilePile());
+        opponentInfoPanel.addComponent(opponentLifePointsView.getPanel());
 
-        opponentPanel.addComponent(new Label("Opponent"));
-        opponentPanel.addComponent(opponentLifePointsView.getPanel());
-        opponentPanel.addComponent(opponentHandPanel);
+        // Middle column: Opponent's hand
+        Panel opponentHandPanel = new Panel(new GridLayout(1));
         opponentHandView = new HandView();
         List<CardModel> opponentHandCards = fieldModel.getOpponentDeck().drawCards(7);
-
         for (CardModel card : opponentHandCards) {
             CardView cardView = new CardView(card);
             opponentHandView.addCard(cardView);
         }
-
         opponentHandPanel.addComponent(opponentHandView.getMainPanel());
+
+        // Right column: Deck, Graveyard, and Exile Pile
+        Panel opponentDecksPanel = new Panel(new LinearLayout(Direction.VERTICAL));
+        opponentDeckView = new DeckView(fieldModel.getOpponentDeck());
+        opponentGraveyardView = new GraveyardView(fieldModel.getOpponentGraveyard());
+        opponentExilePileView = new ExilePileView(fieldModel.getOpponentExilePile());
+
         opponentDecksPanel.addComponent(opponentDeckView.getPanel());
         opponentDecksPanel.addComponent(opponentGraveyardView.getPanel());
         opponentDecksPanel.addComponent(opponentExilePileView.getPanel());
-        opponentPanel.addComponent(opponentDecksPanel);
+
+        // Add components to their respective columns
+        opponentPanel.addComponent(opponentInfoPanel, GridLayout.createLayoutData(GridLayout.Alignment.BEGINNING, GridLayout.Alignment.FILL, true, true));
+        opponentPanel.addComponent(opponentHandPanel, GridLayout.createLayoutData(GridLayout.Alignment.CENTER, GridLayout.Alignment.FILL, true, true));
+        opponentPanel.addComponent(opponentDecksPanel, GridLayout.createLayoutData(GridLayout.Alignment.END, GridLayout.Alignment.FILL, true, true));
 
 
         // field panel
-        Panel fieldPanel = new Panel(new LinearLayout(Direction.HORIZONTAL));
+        Panel fieldPanel = new Panel(new GridLayout(2));
+        fieldPanel.setLayoutData(GridLayout.createLayoutData(GridLayout.Alignment.FILL, GridLayout.Alignment.FILL, true, true));
         actionMenuView = new ActionMenuView();
         fieldPanel.addComponent(new Label("Field"));
         fieldPanel.addComponent(actionMenuView.getContentPanel());
 
         // player panel
-        Panel playerPanel = new Panel(new LinearLayout(Direction.HORIZONTAL));
+        Panel playerPanel = new Panel(new GridLayout(2));
+        playerPanel.setLayoutData(GridLayout.createLayoutData(GridLayout.Alignment.FILL, GridLayout.Alignment.FILL, true, true));
         Panel playerHandPanel = new Panel(new GridLayout(1));
         Panel playerDecksPanel = new Panel(new LinearLayout(Direction.VERTICAL));
 
@@ -118,6 +129,7 @@ public class FieldView {
         mainPanel.addComponent(fieldPanel);
         mainPanel.addComponent(playerPanel);
         window.setComponent(mainPanel);
+        window.setHints(List.of(Window.Hint.EXPANDED));
     }
 
     private static FieldModel getFieldModel() {
@@ -141,18 +153,7 @@ public class FieldView {
         HandModel opponentHand = new HandModel();
 
 
-
-        return new FieldModel(
-                playerLifePoints,
-                opponentLifePoints,
-                playerDeck,
-                opponentDeck,
-                playerGraveyard,
-                opponentGraveyard,
-                playerExilePile,
-                opponentExilePile,
-                playerHand,
-                opponentHand);
+        return new FieldModel(playerLifePoints, opponentLifePoints, playerDeck, opponentDeck, playerGraveyard, opponentGraveyard, playerExilePile, opponentExilePile, playerHand, opponentHand);
     }
 
 }
